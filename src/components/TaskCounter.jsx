@@ -3,5 +3,11 @@ function pluralize(count, singular, plural) {
 }
 
 export default function TaskCounter({ tasks }) {
-  return <p className="counter">{pluralize(tasks.length, "tarea", "tareas")}</p>;
+  const doneCount = tasks.filter((task) => task.done).length;
+
+  return (
+    <p className="counter">
+      {pluralize(tasks.length, "tarea", "tareas")} · {pluralize(doneCount, "completada", "completadas")}
+    </p>
+  );
 }

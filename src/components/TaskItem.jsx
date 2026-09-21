@@ -1,8 +1,15 @@
-export default function TaskItem({ task }) {
+export default function TaskItem({ task, onToggle }) {
   return (
     <li>
-      <span className="marker">○</span>
-      <span className="title">{task.title}</span>
+      <button
+        type="button"
+        className="check"
+        aria-label={task.done ? "Marcar como pendiente" : "Marcar como completada"}
+        onClick={() => onToggle(task.id)}
+      >
+        {task.done ? "●" : "○"}
+      </button>
+      <span className={task.done ? "title done" : "title"}>{task.title}</span>
     </li>
   );
 }

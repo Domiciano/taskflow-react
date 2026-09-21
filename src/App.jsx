@@ -4,7 +4,7 @@ import TaskCounter from "./components/TaskCounter";
 import { useTasks } from "./hooks/useTasks";
 
 export default function App() {
-  const { tasks, addTask } = useTasks();
+  const { tasks, addTask, toggleTask } = useTasks();
 
   return (
     <>
@@ -18,7 +18,7 @@ export default function App() {
 
         {/* controles de la lista */}
 
-        <TaskList tasks={tasks} />
+        <TaskList tasks={tasks} onToggle={toggleTask} />
         <TaskCounter tasks={tasks} />
       </main>
 
