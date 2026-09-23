@@ -1,15 +1,30 @@
-export default function TaskItem({ task, onToggle }) {
+import { useState } from "react";
+
+export default function TaskItem({ task }) {
+  const [isDragging, setIsDragging] = useState(false);
+
+  function handleDragStart(event) {
+    event.dataTransfer.setData("text/plain", String(task.id));
+    event.dataTransfer.effectAllowed = "move";
+    setIsDragging(true);
+  }
+
+  function handleDragEnd() {
+    setIsDragging(false);
+  }
+
   return (
-    <li>
-      <button
-        type="button"
-        className="check"
-        aria-label={task.done ? "Marcar como pendiente" : "Marcar como completada"}
-        onClick={() => onToggle(task.id)}
-      >
-        {task.done ? "●" : "○"}
-      </button>
-      <span className={task.done ? "title done" : "title"}>{task.title}</span>
+    <li
+      className={isDragging ? "task-card dragging" : "task-card"}
+      draggable
+      title="Arrastra para cambiar de columna"
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
+      <span className="drag-indicator" aria-hidden="true">⠿</span>
+      <span className={task.status === "done" ? "task-title done" : "task-title"}>
+        {task.title}
+      </span>
     </li>
   );
 }

@@ -4,21 +4,18 @@ import TaskCounter from "./components/TaskCounter";
 import { useTasks } from "./hooks/useTasks";
 
 export default function App() {
-  const { tasks, addTask, toggleTask } = useTasks();
+  const { tasks, addTask, moveTask } = useTasks();
 
   return (
     <>
-      <header>
+      <header className="app-header">
         <h1>Icesi<span>Task</span></h1>
         <p className="subtitle">Do it simple!</p>
       </header>
 
       <main>
         <NewTaskForm onAdd={addTask} />
-
-        {/* controles de la lista */}
-
-        <TaskList tasks={tasks} onToggle={toggleTask} />
+        <TaskList tasks={tasks} onMove={moveTask} />
         <TaskCounter tasks={tasks} />
       </main>
 
