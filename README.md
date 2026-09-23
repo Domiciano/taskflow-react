@@ -13,7 +13,7 @@ descríbele qué quieres. En `PROMPTS.md` están las frases que vas a necesitar.
 
 ## Qué hace hoy
 - Añadir tareas
-- Marcarlas como completadas
+- Movirlas entre por hacer, en proceso y hecho arrastrando las tarjetas
 - Contar cuántas hay y cuántas están hechas
 - Guardarlas para que no se pierdan al cerrar el navegador
 

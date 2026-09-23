@@ -3,7 +3,7 @@ function pluralize(count, singular, plural) {
 }
 
 export default function TaskCounter({ tasks }) {
-  const doneCount = tasks.filter((task) => task.done).length;
+  const doneCount = tasks.filter((task) => task.status === "done").length;
 
   return (
     <p className="counter">

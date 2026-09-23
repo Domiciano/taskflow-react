@@ -1,19 +1,26 @@
-import TaskItem from "./TaskItem";
+import TaskColumn from "./TaskColumn";
 
-export default function TaskList({ tasks, onToggle }) {
-  if (tasks.length === 0) {
-    return (
-      <ul>
-        <li className="empty">Todavía no hay tareas.</li>
-      </ul>
-    );
-  }
+const columns = [
+  { status: "todo", label: "Por hacer" },
+  { status: "in-progress", label: "En proceso" },
+  { status: "done", label: "Hecho" },
+];
 
+export default function TaskList({ tasks, onMove }) {
   return (
-    <ul>
-      {tasks.map((task) => (
-        <TaskItem key={task.id} task={task} onToggle={onToggle} />
-      ))}
-    </ul>
+    <section className="board" aria-label="Tablero de tareas">
+      <p className="board-hint">Arrastra las tarjetas para cambiar su estado.</p>
+      <div className="task-board">
+        {columns.map((column) => (
+          <TaskColumn
+            key={column.status}
+            status={column.status}
+            label={column.label}
+            tasks={tasks.filter((task) => task.status === column.status)}
+            onMove={onMove}
+          />
+        ))}
+      </div>
+    </section>
   );
 }

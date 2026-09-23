@@ -1,18 +1,37 @@
 import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "taskflow.tasks";
+const TASK_STATUSES = ["todo", "in-progress", "done"];
 
 const sampleTasks = [
-  { id: 1, title: "Preparar la presentación del lunes", done: false, createdAt: "2026-09-14T08:05:00" },
-  { id: 2, title: "Revisar el informe de gastos", done: true, createdAt: "2026-09-14T08:10:00" },
-  { id: 3, title: "Responder el correo de Compras", done: false, createdAt: "2026-09-14T08:15:00" },
+  { id: 1, title: "Preparar la presentación del lunes", status: "todo", createdAt: "2026-09-14T08:05:00" },
+  { id: 2, title: "Revisar el informe de gastos", status: "done", createdAt: "2026-09-14T08:10:00" },
+  { id: 3, title: "Responder el correo de Compras", status: "in-progress", createdAt: "2026-09-14T08:15:00" },
 ];
+
+function normalizeTask(task) {
+  const status = TASK_STATUSES.includes(task.status)
+    ? task.status
+    : task.done
+      ? "done"
+      : "todo";
+
+  return {
+    id: task.id,
+    title: task.title,
+    status,
+    createdAt: task.createdAt,
+  };
+}
 
 function loadTasks() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved !== null) {
-      return JSON.parse(saved);
+      const parsedTasks = JSON.parse(saved);
+      if (Array.isArray(parsedTasks)) {
+        return parsedTasks.map(normalizeTask);
+      }
     }
   } catch (error) {
     console.warn("No se pudo leer lo que estaba guardado.", error);
@@ -34,15 +53,21 @@ export function useTasks() {
   function addTask(title) {
     setTasks((current) => [
       ...current,
-      { id: Date.now(), title: title, done: false, createdAt: new Date().toISOString() },
+      { id: Date.now(), title: title, status: "todo", createdAt: new Date().toISOString() },
     ]);
   }
 
-  function toggleTask(id) {
+  function moveTask(id, status) {
+    if (!TASK_STATUSES.includes(status)) {
+      return;
+    }
+
     setTasks((current) =>
-      current.map((task) => (task.id === id ? { ...task, done: !task.done } : task))
+      current.map((task) =>
+        String(task.id) === String(id) && task.status !== status ? { ...task, status } : task
+      )
     );
   }
 
-  return { tasks, addTask, toggleTask };
+  return { tasks, addTask, moveTask };
 }
