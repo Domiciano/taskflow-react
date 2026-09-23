@@ -1,4 +1,4 @@
-# TaskFlow
+# IcesiTask
 
 Aplicación de una lista de tareas del taller de versionamiento · Microcredencial en Programación
 No Code - Low Code con IA · Universidad Icesi.

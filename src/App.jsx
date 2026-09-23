@@ -9,8 +9,8 @@ export default function App() {
   return (
     <>
       <header>
-        <h1>TaskFlow</h1>
-        <p className="subtitle">Organiza tus pendientes</p>
+        <h1>Icesi<span>Task</span></h1>
+        <p className="subtitle">Do it simple!</p>
       </header>
 
       <main>
@@ -23,7 +23,7 @@ export default function App() {
       </main>
 
       <footer>
-        <p id="credits">Hecho por Tu Nombre</p>
+        <p id="credits">IcesiTask</p>
       </footer>
     </>
   );
